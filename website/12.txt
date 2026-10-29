@@ -1,0 +1,212 @@
+# Cache Coherence Protocol Simulator
+# MESI Protocol
+
+class CacheLine:
+    def __init__(self):
+        self.state = "I"      # M, E, S, I
+        self.data = None
+
+
+class Processor:
+    def __init__(self, name):
+        self.name = name
+        self.cache = {}
+
+    def get_line(self, address):
+        if address not in self.cache:
+            self.cache[address] = CacheLine()
+        return self.cache[address]
+
+
+class MESISimulator:
+    def __init__(self):
+        self.p1 = Processor("P1")
+        self.p2 = Processor("P2")
+
+        self.memory = {
+            "A": 10,
+            "B": 20
+        }
+
+        self.hits = 0
+        self.misses = 0
+
+    def show_cache(self):
+        print("\n--- Cache Status ---")
+
+        for processor in [self.p1, self.p2]:
+            print(processor.name)
+
+            for address, line in processor.cache.items():
+                print(
+                    " Address:", address,
+                    "Data:", line.data,
+                    "State:", line.state
+                )
+
+    def read(self, processor, address):
+
+        print("\n", processor.name, "READ", address)
+
+        line = processor.get_line(address)
+
+        # Cache hit
+        if line.state != "I":
+            self.hits += 1
+            print("Cache HIT")
+
+            print(
+                processor.name,
+                "reads",
+                line.data,
+                "State:",
+                line.state
+            )
+
+            return
+
+        # Cache miss
+        self.misses += 1
+        print("Cache MISS")
+
+        other = self.p2 if processor == self.p1 else self.p1
+        other_line = other.get_line(address)
+
+        # Other cache has modified copy
+        if other_line.state == "M":
+            print("Other cache has Modified copy")
+
+            # Write data back to memory
+            self.memory[address] = other_line.data
+
+            other_line.state = "S"
+
+            line.data = self.memory[address]
+            line.state = "S"
+
+            print("Both caches move to SHARED state")
+
+        # Other cache has shared copy
+        elif other_line.state == "S":
+            print("Other cache has Shared copy")
+
+            line.data = other_line.data
+            line.state = "S"
+
+        # Other cache has exclusive copy
+        elif other_line.state == "E":
+            print("Other cache has Exclusive copy")
+
+            line.data = other_line.data
+
+            other_line.state = "S"
+            line.state = "S"
+
+        # No other valid copy
+        else:
+            print("No other valid copy")
+
+            line.data = self.memory[address]
+            line.state = "E"
+
+        print(
+            processor.name,
+            "reads",
+            line.data,
+            "State:",
+            line.state
+        )
+
+    def write(self, processor, address, value):
+
+        print("\n", processor.name, "WRITE", address, "=", value)
+
+        line = processor.get_line(address)
+
+        other = self.p2 if processor == self.p1 else self.p1
+        other_line = other.get_line(address)
+
+        # Write hit
+        if line.state != "I":
+            self.hits += 1
+            print("Write HIT")
+
+        else:
+            self.misses += 1
+            print("Write MISS")
+
+            # Load data before writing
+            if other_line.state == "M":
+                self.memory[address] = other_line.data
+                other_line.state = "I"
+
+            elif other_line.state == "E":
+                other_line.state = "I"
+
+            elif other_line.state == "S":
+                other_line.state = "I"
+
+            line.data = self.memory[address]
+
+        # Invalidate other cache
+        if other_line.state != "I":
+            other_line.state = "I"
+            print(
+                "Invalidating",
+                other.name,
+                "cache"
+            )
+
+        # Writer becomes Modified
+        line.data = value
+        line.state = "M"
+
+        print(
+            processor.name,
+            "now has",
+            address,
+            "=",
+            value,
+            "State: M"
+        )
+
+    def performance(self):
+
+        total = self.hits + self.misses
+
+        print("\n--- Performance Analysis ---")
+        print("Cache Hits:", self.hits)
+        print("Cache Misses:", self.misses)
+        print("Total Accesses:", total)
+
+        if total > 0:
+            hit_rate = (self.hits / total) * 100
+            miss_rate = (self.misses / total) * 100
+
+            print("Hit Rate:", round(hit_rate, 2), "%")
+            print("Miss Rate:", round(miss_rate, 2), "%")
+
+
+# -------------------------
+# Main Program
+# -------------------------
+
+simulator = MESISimulator()
+
+# Processor 1 reads A
+simulator.read(simulator.p1, "A")
+
+# Processor 2 reads A
+simulator.read(simulator.p2, "A")
+
+# Processor 1 writes A
+simulator.write(simulator.p1, "A", 50)
+
+# Processor 2 reads A
+simulator.read(simulator.p2, "A")
+
+# Display caches
+simulator.show_cache()
+
+# Performance
+simulator.performance()

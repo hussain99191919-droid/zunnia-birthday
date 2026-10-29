@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8f3">
+  <title>For Zunnia, With Love</title>
+  <meta name="description" content="A birthday surprise made with love for Zunnia, from Hussain.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"><span>✦</span><span>✧</span><span>♡</span><span>✦</span><span>✧</span><span>♡</span></div>
+  <main>
+    <section class="welcome screen" id="welcome" aria-labelledby="welcome-title">
+      <div class="welcome-stars" aria-hidden="true">✦　·　✧　·　✦</div>
+      <p class="eyebrow">A little something, made with love</p>
+      <h1 id="welcome-title">For Someone<br><em>Very Special</em> <span class="pink">♥</span></h1>
+      <p class="welcome-copy">Zunnia, this little world is made just for you...</p>
+      <div class="gift" aria-hidden="true"><div class="gift-lid"></div><div class="gift-box"><span>♥</span></div><i class="gift-ribbon"></i></div>
+      <button class="button primary" id="open-surprise">Open Your Surprise <span aria-hidden="true">🎁</span></button>
+      <p class="signature">From Hussain, with love <span aria-hidden="true">💌</span></p>
+    </section>
+
+    <div id="experience" class="hidden">
+      <audio id="birthday-audio" preload="none" loop aria-hidden="true"><source src="assets/audio/birthday-music.mp3" type="audio/mpeg"></audio>
+      <header class="topbar"><a class="brand" href="#home" aria-label="Back to celebration">Z <span>♥</span></a><nav aria-label="Page sections"><a href="#home">Birthday</a><a href="#journey">Our journey</a><a href="#photos">Photos</a><a href="#letter">A letter</a></nav><span id="music-status" class="music-status" role="status">Music is ready. Press Play to listen.</span><div class="audio-controls"><button class="icon-button" id="music-toggle" aria-label="Play birthday music" aria-pressed="false" title="Play optional local birthday music">♫</button><button class="icon-button" id="mute-toggle" aria-label="Mute birthday music" aria-pressed="false" title="Mute birthday music">◖))</button></div></header>
+      <section class="hero section" id="home">
+        <div class="hero-copy"><p class="eyebrow">Today is all about you</p><h2>Happy Birthday<br><em>Meri Zunniaaa</em> <span class="pink">♥</span></h2>
+          <p class="lead">Zunniaaa, aaj ka din tumhare naam! 🥹</p>
+          <p>Dua hai ke Allah tumhari zindagi ko khushiyon, sukoon, sehat aur kamyabi se bhar de. May your smile always find a reason to shine, and may this new year bring you beautiful opportunities and countless happy moments. Ameen.</p>
+          <div class="actions"><button class="button primary" id="celebrate">Celebrate with confetti ✨</button><button class="button secondary" id="replay">Replay the opening</button></div>
+        </div>
+        <div class="cake-wrap"><div class="cake-glow"></div><div class="cake" role="img" aria-label="A birthday cake with three candles"><div class="candles"><div class="candle"><i></i></div><div class="candle"><i></i></div><div class="candle"><i></i></div></div><div class="cake-top"></div><div class="cake-layer layer-one"></div><div class="cake-layer layer-two"></div><div class="cake-plate"></div></div><p id="wish-message" aria-live="polite">A little birthday magic, just for you ✨</p><button class="button secondary wish-button" id="wish">Make a Birthday Wish ✨</button></div>
+      </section>
+      <section class="section journey" id="journey"><p class="eyebrow">A date to keep close</p><h2>Our Little Journey <span class="pink">♡</span></h2><div class="date-card"><span class="date-day">25</span><div><strong>March 2025</strong><p>The day our journey began</p></div><span class="date-sparkle">✦</span></div><p class="journey-note">Since 25 March 2025, this journey has held a special place in my heart. I'm grateful for what we share, and for the happiness of celebrating you today.</p><div class="memory-grid">
+        <article class="memory-card"><span>WITH LOVE</span><h3>What I cherish about you</h3><p>I appreciate your kindness, your presence, and the happiness you bring simply by being you.</p></article>
+        <article class="memory-card"><span>A WISH FOR YOU</span><h3>All the happiness you deserve</h3><p>May this year bring you peace, laughter, good health, and beautiful opportunities. Ameen.</p></article>
+        <article class="memory-card"><span>ALWAYS CLOSE TO MY HEART</span><h3>A journey I hold dear</h3><p>Our beginning is a date I'll always treasure. Thank you for being someone so special to me.</p></article></div></section>
+      <section class="section photos" id="photos"><p class="eyebrow">Little snapshots, lots of love</p><h2>Our Photos <span class="pink">♡</span></h2><p class="section-intro">A little picture of us, here to make this birthday corner feel like ours.</p><div class="gallery" id="gallery"></div></section>
+      <section class="section letter-section" id="letter"><p class="eyebrow">A few words from me to you</p><h2>A Letter for Zunnia</h2><div class="envelope" id="envelope"><div class="letter-paper" id="letter-paper" role="region" aria-label="Letter from Hussain" tabindex="-1" aria-hidden="true" inert><div class="letter-text" id="letter-text"></div></div><div class="envelope-pocket" aria-hidden="true"></div><div class="envelope-flap" aria-hidden="true"></div><div class="seal" aria-hidden="true">♥</div></div><button class="button primary" id="letter-toggle" aria-expanded="false" aria-controls="letter-paper">Open Your Letter 💌</button></section>
+      <section class="finale section"><div class="final-heart" aria-hidden="true">♥</div><p class="eyebrow">A little wish, from my heart</p><h2>Made with love,<br><em>just for you</em> <span class="pink">♥</span></h2><p>May your day be as lovely as you are.</p><p class="final-signature">— Hussain</p><div class="actions centered"><button class="button primary" id="replay-final">Replay the birthday experience</button><a class="button secondary" href="#home">Back to the celebration</a></div></section>
+      <footer>Made with care, for Zunnia <span class="pink">♥</span><small>Your photos and personal words stay in this site’s local files. Anyone with a published URL may be able to see them.</small></footer>
+    </div>
+  </main>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden><button class="lightbox-close" id="lightbox-close" aria-label="Close photo viewer">×</button><button class="lightbox-nav previous" id="lightbox-prev" aria-label="Previous photo">‹</button><figure><img id="lightbox-image" alt=""><figcaption id="lightbox-caption"></figcaption></figure><button class="lightbox-nav next" id="lightbox-next" aria-label="Next photo">›</button></div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+# Lab 11: Out-of-Order Execution Simulator
+
+# Instructions:
+# Instruction, Destination, Source 1, Source 2
+
+instructions = [
+    ("I1", "R1", "R2", "R3"),   # R1 = R2 + R3
+    ("I2", "R4", "R5", "R6"),   # R4 = R5 + R6
+    ("I3", "R7", "R1", "R8"),   # R7 = R1 + R8
+    ("I4", "R9", "R4", "R10"),  # R9 = R4 + R10
+    ("I5", "R11", "R12", "R13") # R11 = R12 + R13
+]
+
+completed = set()
+execution_order = []
+
+
+def has_dependency(instruction, completed):
+    name, destination, source1, source2 = instruction
+
+    # Check whether source registers are produced
+    # by previous instructions that are not completed
+    for previous in instructions:
+
+        previous_name = previous[0]
+        previous_destination = previous[1]
+
+        if previous_name == name:
+            break
+
+        if previous_name not in completed:
+
+            if source1 == previous_destination:
+                return True
+
+            if source2 == previous_destination:
+                return True
+
+    return False
+
+
+print("===== OUT-OF-ORDER EXECUTION =====")
+
+remaining = instructions.copy()
+
+while remaining:
+
+    executed = False
+
+    for instruction in remaining:
+
+        name = instruction[0]
+
+        if not has_dependency(instruction, completed):
+
+            print(
+                "Executing:",
+                name,
+                "Destination:",
+                instruction[1]
+            )
+
+            execution_order.append(name)
+            completed.add(name)
+            remaining.remove(instruction)
+
+            executed = True
+            break
+
+    if not executed:
+        print("Pipeline stalled because of dependency.")
+        break
+
+
+print("\nOriginal Instruction Order:")
+
+for instruction in instructions:
+    print(instruction[0])
+
+
+print("\nOut-of-Order Execution:")
+
+for instruction in execution_order:
+    print(instruction)
+
+print("\nTotal Instructions:", len(instructions))
+print("Instructions Executed:", len(execution_order))
